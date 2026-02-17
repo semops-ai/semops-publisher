@@ -47,16 +47,15 @@ cp .env.example .env  # Add ANTHROPIC_API_KEY
 /format                    # Format for publishing
 ```
 
-## Slash Commands
+## Workflow Steps
 
-| Command | Description |
-|---------|-------------|
-| `/new-post` | Create new post with directory structure |
-| `/research` | Run research phase |
-| `/outline` | Generate outline from research |
-| `/draft` | Generate draft from outline |
-| `/format` | Format for WordPress, LinkedIn |
-| `/status` | Check post status |
+| Step | Description |
+|------|-------------|
+| **Create** | Set up new post with directory structure |
+| **Research** | Gather 1P sources, validate concepts |
+| **Outline** | Generate structured outline from research |
+| **Draft** | Generate full prose from outline |
+| **Format** | Adapt for target publishing platforms |
 
 ## Role in Architecture
 
@@ -98,9 +97,12 @@ posts/my-post-slug/
 
 ## Documentation
 
-- [CLAUDE.md](CLAUDE.md) - AI agent instructions
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Technical architecture
-- [docs/decisions/](docs/decisions/) - Architecture Decision Records
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - System architecture and agent pipeline
+- [docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md) - Services and dependencies
+- [docs/USER_GUIDE.md](docs/USER_GUIDE.md) - Development environment and workflows
+- [docs/CONTENT_MANIFEST.md](docs/CONTENT_MANIFEST.md) - Content manifest conventions
+- [docs/DIAGRAM_STANDARDS.md](docs/DIAGRAM_STANDARDS.md) - Diagram creation standards
+- [docs/RUNBOOK.md](docs/RUNBOOK.md) - Operational procedures
 
 ## Related Repositories
 
