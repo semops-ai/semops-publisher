@@ -1,0 +1,32 @@
+services:
+  comfyui:
+    image: zhangp365/comfyui:latest
+    container_name: semops-comfyui
+    ports:
+      - "8188:8188"
+    volumes:
+      # Models - centralized storage per ADR-0006
+      # ComfyUI's flat structure: /media/models/{checkpoints,loras,vae,...}
+      - ${HOME}/models:/data
+      # Workflows
+      - ./workflows:/app/user/default/workflows
+      # Input images (for ControlNet, img2img)
+      - ./inputs:/app/input
+      # Output images
+      - ./outputs:/app/output
+      # Custom nodes persist
+      - comfyui_custom_nodes:/app/custom_nodes
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CLI_ARGS=
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+
+volumes:
+  comfyui_custom_nodes:
