@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+ blog-publisher:
+ build: .
+ container_name: blog-publisher-phase1
+ volumes:
+ - .:/app
+ - ./posts:/app/posts
+ env_file:
+ - .env
+ environment:
+ - PYTHONPATH=/app
+ stdin_open: true
+ tty: true
+ command: /bin/bash
+
+# Phase 1: No database or additional services needed
+# Phase 2+ will add back as needed

@@ -72,9 +72,9 @@ When agents suggest diagrams in outlines or drafts, use this format:
 **Suggested Content:**
 \`\`\`mermaid
 graph TD
-    A[Start] --> B{Decision}
-    B -->|Yes| C[Action 1]
-    B -->|No| D[Action 2]
+ A[Start] --> B{Decision}
+ B -->|Yes| C[Action 1]
+ B -->|No| D[Action 2]
 \`\`\`
 
 **Rendering:**
@@ -114,9 +114,9 @@ graph TD
 ### Flowchart
 ```mermaid
 graph TD
-    A[Start] --> B{Is it?}
-    B -->|Yes| C[OK]
-    B -->|No| D[End]
+ A[Start] --> B{Is it?}
+ B -->|Yes| C[OK]
+ B -->|No| D[End]
 ```
 
 **Use for:** Process flows, decision trees, workflows
@@ -124,10 +124,10 @@ graph TD
 ### Sequence Diagram
 ```mermaid
 sequenceDiagram
-    Client->>Server: Request
-    Server->>Database: Query
-    Database-->>Server: Data
-    Server-->>Client: Response
+ Client->>Server: Request
+ Server->>Database: Query
+ Database-->>Server: Data
+ Server-->>Client: Response
 ```
 
 **Use for:** API interactions, message flows, temporal sequences
@@ -135,10 +135,10 @@ sequenceDiagram
 ### State Diagram
 ```mermaid
 stateDiagram-v2
-    [*] --> Idle
-    Idle --> Processing
-    Processing --> Complete
-    Complete --> [*]
+ [*] --> Idle
+ Idle --> Processing
+ Processing --> Complete
+ Complete --> [*]
 ```
 
 **Use for:** System states, FSMs, status transitions
@@ -146,15 +146,15 @@ stateDiagram-v2
 ### Class Diagram
 ```mermaid
 classDiagram
-    class Animal {
-        +name: string
-        +makeSound()
-    }
-    class Dog {
-        +breed: string
-        +bark()
-    }
-    Animal <|-- Dog
+ class Animal {
+ +name: string
+ +makeSound
+ }
+ class Dog {
+ +breed: string
+ +bark
+ }
+ Animal <|-- Dog
 ```
 
 **Use for:** Software architecture, object models, relationships
@@ -162,8 +162,8 @@ classDiagram
 ### Entity Relationship
 ```mermaid
 erDiagram
-    CUSTOMER ||--o{ ORDER : places
-    ORDER ||--|{ LINE-ITEM : contains
+ CUSTOMER ||--o{ ORDER : places
+ ORDER ||--|{ LINE-ITEM : contains
 ```
 
 **Use for:** Database schemas, data models
@@ -171,10 +171,10 @@ erDiagram
 ### Gantt Chart
 ```mermaid
 gantt
-    title Project Timeline
-    section Phase 1
-    Research :a1, 2024-01-01, 30d
-    Draft    :a2, after a1, 20d
+ title Project Timeline
+ section Phase 1
+ Research :a1, 2024-01-01, 30d
+ Draft :a2, after a1, 20d
 ```
 
 **Use for:** Project timelines, milestones
@@ -186,9 +186,9 @@ gantt
 ### File Organization
 ```
 assets/
-  diagram-name.excalidraw      # Source file (JSON)
-  diagram-name.png             # Rendered raster
-  diagram-name.svg             # Rendered vector
+ diagram-name.excalidraw # Source file (JSON)
+ diagram-name.png # Rendered raster
+ diagram-name.svg # Rendered vector
 ```
 
 ### Style Guidelines
@@ -215,7 +215,7 @@ assets/
 
 ### Export Settings
 
-**For Web:**
+**For WordPress:**
 - PNG at 2x resolution (retina)
 - Max width: 1200px
 - Compress for web (TinyPNG or similar)
@@ -231,39 +231,39 @@ assets/
 ### Phase 1: Manual Creation
 
 1. **From Agent Specification:**
-   - Agent suggests diagram in outline/draft
-   - Includes type, purpose, suggested content
+ - Agent suggests diagram in outline/draft
+ - Includes type, purpose, suggested content
 
 2. **Create Source File:**
-   ```bash
-   # For Mermaid
-   # Create .mermaid file in assets/
-   # Paste suggested mermaid code
+ ```bash
+ # For Mermaid
+ # Create .mermaid file in assets/
+ # Paste suggested mermaid code
 
-   # For Excalidraw
-   # Open https://excalidraw.com
-   # Create diagram per spec
-   # Export as .excalidraw JSON to assets/
-   ```
+ # For Excalidraw
+ # Open https://excalidraw.com
+ # Create diagram per spec
+ # Export as .excalidraw JSON to assets/
+ ```
 
 3. **Render for Publishing:**
-   ```bash
-   # Mermaid rendering options:
-   # - VS Code Mermaid extension (preview + export)
-   # - mermaid-cli: mmdc -i input.mermaid -o output.png
-   # - GitHub/GitLab markdown rendering
+ ```bash
+ # Mermaid rendering options:
+ # - VS Code Mermaid extension (preview + export)
+ # - mermaid-cli: mmdc -i input.mermaid -o output.png
+ # - GitHub/GitLab markdown rendering
 
-   # Excalidraw rendering:
-   # - Export PNG from excalidraw.com
-   # - Or use excalidraw-cli
-   # - Export both PNG and SVG
-   ```
+ # Excalidraw rendering:
+ # - Export PNG from excalidraw.com
+ # - Or use excalidraw-cli
+ # - Export both PNG and SVG
+ ```
 
 4. **Add to Post:**
-   ```markdown
-   ![Diagram description](assets/diagram-name.png)
-   *Caption explaining what the diagram shows*
-   ```
+ ```markdown
+ ![Diagram description](assets/diagram-name.png)
+ *Caption explaining what the diagram shows*
+ ```
 
 ### Phase 2+: Potential Automation
 
@@ -321,12 +321,12 @@ Agents should consider:
 **Specification:**
 \`\`\`mermaid
 graph LR
-    User[User Query] --> Emb[Embedding Model]
-    Emb --> Vec[Vector DB]
-    Vec --> Ret[Retrieved Docs]
-    Ret --> LLM[LLM]
-    User --> LLM
-    LLM --> Resp[Response]
+ User[User Query] --> Emb[Embedding Model]
+ Emb --> Vec[Vector DB]
+ Vec --> Ret[Retrieved Docs]
+ Ret --> LLM[LLM]
+ User --> LLM
+ LLM --> Resp[Response]
 \`\`\`
 
 **Alt text:** "Flowchart showing RAG system with user query being processed through embedding model, vector database retrieval, and LLM generation"
@@ -364,17 +364,17 @@ Style: Hand-drawn, friendly, whiteboard-like
 
 ```
 assets/
-  # Descriptive, kebab-case names
-  user-authentication-flow.mermaid
-  user-authentication-flow.png
+ # Descriptive, kebab-case names
+ user-authentication-flow.mermaid
+ user-authentication-flow.png
 
-  concept-context-window.excalidraw
-  concept-context-window.png
-  concept-context-window.svg
+ concept-context-window.excalidraw
+ concept-context-window.png
+ concept-context-window.svg
 
-  # Hero images
-  hero-main-concept.excalidraw
-  hero-main-concept.png
+ # Hero images
+ hero-main-concept.excalidraw
+ hero-main-concept.png
 ```
 
 ---

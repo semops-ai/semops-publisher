@@ -17,15 +17,15 @@
 
 ### Hero Images (1200x630)
 ```
-Width: 1216  (closest SDXL-friendly to 1200)
-Height: 640  (closest SDXL-friendly to 630)
+Width: 1216 (closest SDXL-friendly to 1200)
+Height: 640 (closest SDXL-friendly to 630)
 ```
 SDXL prefers dimensions divisible by 64.
 
 ### 16:9 Images (1280x720)
 ```
 Width: 1280
-Height: 704  (closest SDXL-friendly to 720)
+Height: 704 (closest SDXL-friendly to 720)
 ```
 
 ### Square (1:1)
@@ -39,9 +39,9 @@ Height: 1024
 1. **Generate** at SDXL-friendly dimensions (divisible by 64)
 2. **Resize** to exact target dimensions if needed
 3. **Convert** to target format:
-   - WebP for resumator (best compression)
-   - JPG for social/WordPress (widest compatibility)
-   - PNG only when transparency needed (diagrams)
+ - WebP for resumator (best compression)
+ - JPG for social/WordPress (widest compatibility)
+ - PNG only when transparency needed (diagrams)
 
 ## Format Guidelines
 
@@ -80,7 +80,7 @@ convert input.png -resize 1200x630 -quality 85 output.jpg
 ```bash
 # Convert all PNGs in outputs/ to WebP for resumator
 for f in outputs/*.png; do
-  convert "$f" -resize 1200x630 -quality 85 "${f%.png}.webp"
+ convert "$f" -resize 1200x630 -quality 85 "${f%.png}.webp"
 done
 ```
 

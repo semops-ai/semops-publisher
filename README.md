@@ -13,10 +13,10 @@
 
 ```
 notes.md → Research → Outline → Draft → Format → publish
-                                              │
-                                              ├── WordPress
-                                              ├── LinkedIn
-                                              └── Knowledge Base
+ │
+ ├── WordPress
+ ├── LinkedIn
+ └── Knowledge Base
 ```
 
 ### Agents
@@ -35,16 +35,16 @@ notes.md → Research → Outline → Draft → Format → publish
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env  # Add ANTHROPIC_API_KEY
+cp .env.example .env # Add ANTHROPIC_API_KEY
 
 # Create and publish a post
-/new-post my-post-slug     # Create post structure
+/new-post my-post-slug # Create post structure
 # Edit posts/my-post-slug/notes.md
-/research                  # Run research agent
-/outline                   # Generate outline
-/draft                     # Generate draft
+/research # Run research agent
+/outline # Generate outline
+/draft # Generate draft
 # Edit draft.md → final.md
-/format                    # Format for publishing
+/format # Format for publishing
 ```
 
 ## Workflow Steps
@@ -61,21 +61,21 @@ cp .env.example .env  # Add ANTHROPIC_API_KEY
 
 ```
 semops-dx-orchestrator [PLATFORM/DX]
-        │
-        ▼
+ │
+ ▼
 semops-core [SCHEMA/INFRASTRUCTURE]
-        │
-        │  Provides: Concepts, entities, knowledge base
-        │
-        ▼
-semops-publisher [PUBLISHING]  ← This repo
-        │
-        │  Owns: Content production, agent pipeline
-        │
-        ▼
+ │
+ │ Provides: Concepts, entities, knowledge base
+ │
+ ▼
+semops-publisher [PUBLISHING] ← This repo
+ │
+ │ Owns: Content production, agent pipeline
+ │
+ ▼
 semops-sites [FRONTEND]
-        │
-        └── Final publishing destination
+ │
+ └── Final publishing destination
 ```
 
 ## Post Structure
@@ -84,15 +84,15 @@ Each post lives in its own directory:
 
 ```
 posts/my-post-slug/
-├── notes.md          # Initial notes and ideas
-├── research.md       # Research agent output
-├── outline.md        # Outline agent output
-├── draft.md          # Draft agent output
-├── final.md          # Edited final version
-├── metadata.yaml     # Post metadata
+├── notes.md # Initial notes and ideas
+├── research.md # Research agent output
+├── outline.md # Outline agent output
+├── draft.md # Draft agent output
+├── final.md # Edited final version
+├── metadata.yaml # Post metadata
 └── formats/
-    ├── wordpress.md  # WordPress-formatted
-    └── linkedin.md   # LinkedIn-formatted
+ ├── wordpress.md # WordPress-formatted
+ └── linkedin.md # LinkedIn-formatted
 ```
 
 ## Documentation

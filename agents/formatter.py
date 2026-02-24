@@ -10,42 +10,42 @@ from datetime import datetime
 
 
 class FormatterAgent:
-    """
-    Formatter agent that:
-    1. Generates LinkedIn version (platform-appropriate formatting)
-    2. Creates frontmatter for semops-core integration
-    """
+ """
+ Formatter agent that:
+ 1. Generates LinkedIn version (platform-appropriate formatting)
+ 2. Creates frontmatter for semops-core integration
+ """
 
-    def __init__(self):
-        self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-        self.model = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")
+ def __init__(self):
+ self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+ self.model = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")
 
-    def format_for_platforms(
-        self, final_content: str, slug: str
-    ) -> tuple[str, str]:
-        """
-        Format content for different platforms.
+ def format_for_platforms(
+ self, final_content: str, slug: str
+ ) -> tuple[str, str]:
+ """
+ Format content for different platforms.
 
-        Args:
-            final_content: Final edited draft
-            slug: Post slug
+ Args:
+ final_content: Final edited draft
+ slug: Post slug
 
-        Returns:
-            Tuple of (linkedin_md, frontmatter_yaml)
-        """
+ Returns:
+ Tuple of (linkedin_md, frontmatter_yaml)
+ """
 
-        # Generate LinkedIn version
-        linkedin = self._format_linkedin(final_content)
+ # Generate LinkedIn version
+ linkedin = self._format_linkedin(final_content)
 
-        # Generate frontmatter for semops-core
-        frontmatter = self._generate_frontmatter(final_content, slug)
+ # Generate frontmatter for semops-core
+ frontmatter = self._generate_frontmatter(final_content, slug)
 
-        return linkedin, frontmatter
+ return linkedin, frontmatter
 
-    def _format_linkedin(self, content: str) -> str:
-        """Format for LinkedIn"""
+ def _format_linkedin(self, content: str) -> str:
+ """Format for LinkedIn"""
 
-        system_prompt = """You are adapting a blog post for LinkedIn.
+ system_prompt = """You are adapting a blog post for LinkedIn.
 
 Transform the content to:
 1. Shorter, punchier paragraphs
@@ -60,24 +60,24 @@ Transform the content to:
 Focus on the key insights and make it engaging for LinkedIn audience.
 """
 
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=4000,
-            system=system_prompt,
-            messages=[
-                {
-                    "role": "user",
-                    "content": f"Adapt this for LinkedIn:\n\n{content}"
-                }
-            ]
-        )
+ response = self.client.messages.create(
+ model=self.model,
+ max_tokens=4000,
+ system=system_prompt,
+ messages=[
+ {
+ "role": "user",
+ "content": f"Adapt this for LinkedIn:\n\n{content}"
+ }
+ ]
+ )
 
-        return response.content[0].text
+ return response.content[0].text
 
-    def _generate_frontmatter(self, content: str, slug: str) -> str:
-        """Generate frontmatter YAML for semops-core"""
+ def _generate_frontmatter(self, content: str, slug: str) -> str:
+ """Generate frontmatter YAML for semops-core"""
 
-        system_prompt = """You are extracting metadata for a knowledge management system.
+ system_prompt = """You are extracting metadata for a knowledge management system.
 
 Extract and structure:
 1. Title
@@ -91,24 +91,24 @@ Extract and structure:
 Output as YAML format for frontmatter.
 """
 
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=2000,
-            system=system_prompt,
-            messages=[
-                {
-                    "role": "user",
-                    "content": f"""Extract metadata from this content:
+ response = self.client.messages.create(
+ model=self.model,
+ max_tokens=2000,
+ system=system_prompt,
+ messages=[
+ {
+ "role": "user",
+ "content": f"""Extract metadata from this content:
 
 Slug: {slug}
-Date: {datetime.now().isoformat()}
+Date: {datetime.now.isoformat}
 
 Content:
 {content}
 
 Generate frontmatter YAML."""
-                }
-            ]
-        )
+ }
+ ]
+ )
 
-        return response.content[0].text
+ return response.content[0].text

@@ -1,0 +1,9 @@
+# Ignore large model files from build context
+models/
+outputs/
+inputs/
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin

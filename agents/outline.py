@@ -9,62 +9,62 @@ from anthropic import Anthropic
 
 
 class OutlineAgent:
-    """
-    Outline agent that:
-    1. Structures argument based on POV
-    2. Integrates research findings with clear citations
-    3. Highlights concepts throughout
-    4. Suggests images/diagrams with descriptions
-    5. Offers alternative perspectives
-    """
+ """
+ Outline agent that:
+ 1. Structures argument based on POV
+ 2. Integrates research findings with clear citations
+ 3. Highlights concepts throughout
+ 4. Suggests images/diagrams with descriptions
+ 5. Offers alternative perspectives
+ """
 
-    def __init__(self):
-        self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-        self.model = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")
+ def __init__(self):
+ self.client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+ self.model = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")
 
-    def generate_outline(self, notes_content: str, research_content: str) -> str:
-        """
-        Generate outline from notes and research.
+ def generate_outline(self, notes_content: str, research_content: str) -> str:
+ """
+ Generate outline from notes and research.
 
-        Args:
-            notes_content: Original notes
-            research_content: Research findings
+ Args:
+ notes_content: Original notes
+ research_content: Research findings
 
-        Returns:
-            Outline as markdown
-        """
+ Returns:
+ Outline as markdown
+ """
 
-        system_prompt = """You are an outline agent for blog post structure.
+ system_prompt = """You are an outline agent for blog post structure.
 
 Your job is to create a clear, compelling outline that:
 
 1. **Structure the Argument**:
-   - Opening hook
-   - Clear progression of ideas
-   - Strong conclusion
-   - Logical flow
+ - Opening hook
+ - Clear progression of ideas
+ - Strong conclusion
+ - Logical flow
 
 2. **Integrate Research**:
-   - Use citation markers like [^1], [^2]
-   - Link citations to sources at the bottom
-   - Balance 1P and 3P sources
-   - Support key claims with evidence
+ - Use citation markers like [^1], [^2]
+ - Link citations to sources at the bottom
+ - Balance 1P and 3P sources
+ - Support key claims with evidence
 
 3. **Highlight Concepts**:
-   - Use {{concept-name}} tags for key concepts
-   - Define important terms
-   - Link related ideas
+ - Use {{concept-name}} tags for key concepts
+ - Define important terms
+ - Link related ideas
 
 4. **Suggest Visuals**:
-   - Diagrams (Mermaid, Excalidraw)
-   - Images (hero, concept illustrations)
-   - Screenshots or examples
-   - Provide text descriptions
+ - Diagrams (Mermaid, Excalidraw)
+ - Images (hero, concept illustrations)
+ - Screenshots or examples
+ - Provide text descriptions
 
 5. **Alternative Perspectives**:
-   - Acknowledge counterarguments
-   - Suggest critiques or refinements
-   - Identify gaps or weaknesses
+ - Acknowledge counterarguments
+ - Suggest critiques or refinements
+ - Identify gaps or weaknesses
 
 Output Format:
 # Outline: [Title]
@@ -125,15 +125,15 @@ Output Format:
 - [Specific examples to include]
 """
 
-        # Call Claude API
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=4000,
-            system=system_prompt,
-            messages=[
-                {
-                    "role": "user",
-                    "content": f"""Create an outline based on these inputs:
+ # Call Claude API
+ response = self.client.messages.create(
+ model=self.model,
+ max_tokens=4000,
+ system=system_prompt,
+ messages=[
+ {
+ "role": "user",
+ "content": f"""Create an outline based on these inputs:
 
 # Original Notes
 {notes_content}
@@ -142,8 +142,8 @@ Output Format:
 {research_content}
 
 Please create a comprehensive outline that structures the argument effectively."""
-                }
-            ]
-        )
+ }
+ ]
+ )
 
-        return response.content[0].text
+ return response.content[0].text

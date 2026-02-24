@@ -51,15 +51,16 @@ python publish.py format my-post-slug
 
 ```text
 posts/my-post-slug/
-├── notes.md              # Input: topic, POV, references
-├── research.md           # Agent: findings, sources
-├── outline_v1.md         # Agent: first outline
-├── outline_final.md      # Human: approved outline
-├── draft.md              # Agent: full draft
-├── final.md              # Human: edited draft
-├── linkedin.md           # Agent: LinkedIn format
-├── frontmatter.yaml      # Agent: metadata
-└── assets/               # Images, diagrams
+├── notes.md # Input: topic, POV, references
+├── research.md # Agent: findings, sources
+├── outline_v1.md # Agent: first outline
+├── outline_final.md # Human: approved outline
+├── draft.md # Agent: full draft
+├── final.md # Human: edited draft
+├── wordpress.md # Agent: WordPress format
+├── linkedin.md # Agent: LinkedIn format
+├── frontmatter.yaml # Agent: metadata
+└── assets/ # Images, diagrams
 ```
 
 ## Image Generation (ComfyUI)
@@ -70,7 +71,7 @@ posts/my-post-slug/
 cd comfyui
 docker compose up -d
 
-# Access at the ComfyUI web interface
+# Access at http://localhost:8188
 ```
 
 ### Stopping ComfyUI
@@ -82,15 +83,15 @@ docker compose down
 
 ### Model Storage
 
-Models are stored centrally in a dedicated `models/` directory (shared across tools):
+Models are stored in `~/models/` (shared across tools):
 
 ```text
-models/
-├── checkpoints/     # Base models (SDXL, SD 1.5)
-├── loras/           # LoRA models
-├── controlnet/      # ControlNet models
-├── vae/             # VAE models
-└── upscale_models/  # Upscalers
+~/models/
+├── checkpoints/ # Base models (SDXL, SD 1.5)
+├── loras/ # LoRA models
+├── controlnet/ # ControlNet models
+├── vae/ # VAE models
+└── upscale_models/ # Upscalers
 ```
 
 ## Common Issues
@@ -150,6 +151,12 @@ cd comfyui && docker compose restart
 - Rate limits on heavy usage
 - Model names change (update `CLAUDE_MODEL` in config)
 
+### WordPress
+
+**Publishing:**
+- Phase 1: Manual copy-paste from `wordpress.md`
+- Include RankMath SEO metadata from `rankmathseo.yaml`
+
 ### LinkedIn
 
 **Publishing:**
@@ -181,4 +188,5 @@ cp .env.example .env
 ## Related Documentation
 
 - [ARCHITECTURE.md](ARCHITECTURE.md) - System design
-- [DIAGRAM_STANDARDS.md](DIAGRAM_STANDARDS.md) - Diagram specs
+- [CLAUDE.md](../CLAUDE.md) - AI agent instructions
+- [DIAGRAM_STANDARDS.md](../DIAGRAM_STANDARDS.md) - Diagram specs

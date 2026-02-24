@@ -1,6 +1,6 @@
 # Content Manifest Specification
 
-> **ADR:** ADR-0014: Content Manifest Conventions
+> **ADR:** [ADR-0014](decisions/ADR-0014-content-manifest-conventions.md)
 > **Version:** 1.0
 > **Last Updated:** 2026-02-08
 
@@ -8,7 +8,7 @@
 
 The content manifest is YAML frontmatter embedded in Markdown content files. It serves as semops-publisher's contract describing finished content. Downstream consumers (semops-sites, PDF export, manual publishing) use it to drive surface-specific transforms.
 
-semops-publisher frontmatter contains **content-level metadata only** -- no surface-specific fields (routing, excerpt mapping, JSX directives). semops-sites owns the transform from this contract to its own schema.
+Publisher-pr frontmatter contains **content-level metadata only** — no surface-specific fields (routing, excerpt mapping, JSX directives). Sites-pr owns the transform from this contract to its own schema.
 
 ## Universal Fields
 
@@ -31,13 +31,13 @@ All content types include these fields in their YAML frontmatter:
 ### Status Lifecycle
 
 ```
-draft-v1 -> draft-v2 -> ... -> review -> final -> published
+draft-v1 → draft-v2 → ... → review → final → published
 ```
 
-- `draft-vN` -- Work in progress, numbered for version tracking
-- `review` -- Content complete, pending final review
-- `final` -- Approved for publishing
-- `published` -- Live on at least one surface
+- `draft-vN` — Work in progress, numbered for version tracking
+- `review` — Content complete, pending final review
+- `final` — Approved for publishing
+- `published` — Live on at least one surface
 
 ## Content Types
 
@@ -69,17 +69,17 @@ title: "What is Semantic Operations?"
 slug: what-is-semops
 author: Tim Mitchell
 spokes:
-  - why-semops.md
-  - framework.md
-  - how-i-got-here.md
+ - why-semops.md
+ - framework.md
+ - how-i-got-here.md
 audience_tier: accessible
 style_guide: marketing-narrative
 status: published
 date_created: 2026-02-03
 date_updated: 2026-02-06
 tags:
-  - semops
-  - framework
+ - semops
+ - framework
 ---
 ```
 
@@ -103,7 +103,7 @@ date_updated: 2026-02-06
 
 ### blog
 
-Blog posts with a multi-stage workflow (notes -> research -> outline -> draft -> final).
+Blog posts with a multi-stage workflow (notes → research → outline → draft → final).
 
 **Directory:** `posts/<slug>/` (existing convention, unchanged)
 
@@ -111,18 +111,18 @@ Blog posts with a multi-stage workflow (notes -> research -> outline -> draft ->
 
 ```
 posts/<slug>/
-  notes.md              # Manual input
-  research.md           # Agent output
-  outline_v1.md         # Outline drafts
-  outline_final.md      # Approved outline
-  draft.md              # Agent-generated draft
-  final.md              # Edited final version
-  linkedin.md           # LinkedIn format
-  frontmatter.yaml      # Metadata (legacy; migrating to embedded)
-  assets/               # Diagrams, images
+ notes.md # Manual input
+ research.md # Agent output
+ outline_v1.md # Outline drafts
+ outline_final.md # Approved outline
+ draft.md # Agent-generated draft
+ final.md # Edited final version
+ linkedin.md # LinkedIn format
+ frontmatter.yaml # Metadata (legacy; P-4 migrates to embedded)
+ assets/ # Diagrams, images
 ```
 
-**Current state:** Blog metadata lives in a separate `frontmatter.yaml` file with fields like `title`, `slug`, `categories`, `concepts`, `citations`. Future work will migrate this to embedded frontmatter matching the universal manifest format.
+**Current state:** Blog metadata lives in a separate `frontmatter.yaml` file with fields like `title`, `slug`, `categories`, `concepts`, `citations`. Issue P-4 (#81) will migrate this to embedded frontmatter matching the universal manifest format.
 
 ### whitepaper
 
@@ -143,7 +143,7 @@ Marketing-narrative READMEs for public repositories.
 
 **Directory:** `content/github/<repo-name>.md`
 
-No additional fields beyond universal. Simplest content type -- Markdown output, manual copy to target repo.
+No additional fields beyond universal. Simplest content type — Markdown output, manual copy to target repo.
 
 ### linkedin
 
@@ -157,19 +157,19 @@ No additional fields beyond universal. The blog format agent currently generates
 
 ```text
 semops-publisher/
-├── content/                        # Finished content (non-blog)
-│   ├── pages/                      # Website pages
-│   │   └── what-is-semops/        # Hub/spoke group
-│   │       ├── what-is-semops.md  # Hub
-│   │       ├── why-semops.md      # Spoke
-│   │       └── how-i-got-here.md  # Spoke
-│   ├── whitepapers/               # Whitepapers/PDFs
-│   ├── github/                    # GitHub READMEs
-│   └── linkedin/                  # LinkedIn posts
-├── posts/                          # Blog posts (workflow stages)
-│   ├── _references/               # Style reference posts
-│   └── <slug>/                    # Per-post workflow directory
-└── docs/drafts/                    # Working drafts (not published)
+├── content/ # Finished content (non-blog)
+│ ├── pages/ # Website pages
+│ │ └── what-is-semops/ # Hub/spoke group
+│ │ ├── what-is-semops.md # Hub
+│ │ ├── why-semops.md # Spoke
+│ │ └── how-i-got-here.md # Spoke
+│ ├── whitepapers/ # Whitepapers/PDFs
+│ ├── github/ # GitHub READMEs
+│ └── linkedin/ # LinkedIn posts
+├── posts/ # Blog posts (workflow stages)
+│ ├── _references/ # Style reference posts
+│ └── <slug>/ # Per-post workflow directory
+└── docs/drafts/ # Working drafts (not published)
 ```
 
 ## Ownership Boundary
@@ -189,5 +189,5 @@ semops-publisher/
 
 ## References
 
-- ADR-0014: Content Manifest Conventions
+- [ADR-0014: Content Manifest Conventions](decisions/ADR-0014-content-manifest-conventions.md)
 - [ARCHITECTURE.md](ARCHITECTURE.md)

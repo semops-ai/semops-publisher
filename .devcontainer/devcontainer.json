@@ -1,0 +1,55 @@
+{
+ "name": "Blog Publisher - Phase 1",
+ "build": {
+ "dockerfile": "../Dockerfile",
+ "context": ".."
+ },
+ "workspaceFolder": "/app",
+
+ // Mount local code and persist posts directory
+ "mounts": [
+ "source=${localWorkspaceFolder},target=/app,type=bind",
+ "source=blog-publisher-posts,target=/app/posts,type=volume"
+ ],
+
+ // Features to add to the dev container
+ "features": {
+ "ghcr.io/devcontainers/features/git:1": {},
+ "ghcr.io/devcontainers/features/github-cli:1": {}
+ },
+
+ // Configure tool-specific properties
+ "customizations": {
+ "vscode": {
+ "extensions": [
+ "ms-python.python",
+ "ms-python.black-formatter",
+ "charliermarsh.ruff",
+ "yzhang.markdown-all-in-one",
+ "redhat.vscode-yaml",
+ "bierner.markdown-mermaid"
+ ],
+ "settings": {
+ "python.defaultInterpreterPath": "/usr/local/bin/python",
+ "python.formatting.provider": "black",
+ "[python]": {
+ "editor.defaultFormatter": "charliermarsh.ruff",
+ "editor.formatOnSave": true,
+ "editor.codeActionsOnSave": {
+ "source.organizeImports": "explicit"
+ }
+ },
+ "files.autoSave": "onFocusChange"
+ }
+ }
+ },
+
+ // Phase 1: No ports needed (manual workflow)
+ // "forwardPorts": [],
+
+ // Use 'postCreateCommand' to run commands after the container is created
+ "postCreateCommand": "pip install --no-cache-dir -r requirements.txt",
+
+ // Comment out to connect as root instead
+ "remoteUser": "root"
+}

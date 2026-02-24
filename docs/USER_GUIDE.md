@@ -1,14 +1,14 @@
-# semops-publisher User Guide
+# Publisher-PR User Guide
 
 This guide catalogs all content creation capabilities in semops-publisher.
 
 ## Quick Reference
 
-| Capability | Location | Description |
-|------------|----------|-------------|
-| **Blog** | Agent-assisted pipeline | Research, outline, draft, format workflows |
+| Capability | Command / Location | Description |
+|------------|-------------------|-------------|
+| **Blog** | `/new-post`, `/research`, `/outline`, `/draft`, `/format` | Agent-assisted publishing pipeline |
 | **Pages** | `content/pages/` | Website pages (marketing-narrative, hub/spoke) |
-| **Whitepapers** | `content/whitepapers/` | Long-form thought leadership -> PDF |
+| **Whitepapers** | `content/whitepapers/` | Long-form thought leadership → PDF |
 | **GitHub READMEs** | `content/github/` | Marketing-narrative READMEs |
 | **LinkedIn** | `content/linkedin/` or blog-derived | Standalone or Format Agent output |
 | **Resume** | Manual corpus editing | Atomic composition with 75 bullets |
@@ -22,39 +22,43 @@ This guide catalogs all content creation capabilities in semops-publisher.
 
 ```text
 notes.md (manual input)
-    |
-Research -> research.md
-    |
+ ↓
+/research → research.md
+ ↓
 HITL Review
-    |
-Outline -> outline_vN.md
-    |
+ ↓
+/outline → outline_vN.md
+ ↓
 HITL Iteration
-    |
-Draft -> draft.md
-    |
-HITL Editing -> final.md (+ manifest frontmatter)
-    |
-Format -> linkedin.md, frontmatter.yaml
-    |
+ ↓
+/draft → draft.md
+ ↓
+HITL Editing → final.md (+ manifest frontmatter)
+ ↓
+/format → linkedin.md, frontmatter.yaml
+ ↓
 Publish via semops-sites ingestion + LinkedIn manual
 ```
 
-### Workflows
+### Commands
 
 #### Create New Post
 
 ```bash
-python publish.py new <slug>
+/new-post <slug>
 ```
 
 Creates `posts/<slug>/` directory with `notes.md` template.
 
 #### Research
 
-The Research workflow:
+```bash
+/research blog <slug>
+/research page <slug>
+/research whitepaper <slug>
+```
 
-- Queries the knowledge base via MCP tools (`search_knowledge_base`, `search_chunks`)
+- Queries the semops-kb knowledge base via MCP tools (`search_knowledge_base`, `search_chunks`)
 - Supports all content types: blog, page, whitepaper, github-readme, linkedin
 - Extracts research queries from input (title, POV, research topics, key concepts)
 - Generates `research.md` with KB-validated findings, citations, coverage gaps
@@ -63,43 +67,43 @@ The Research workflow:
 #### Outline
 
 ```bash
-python publish.py outline <slug>
-python publish.py outline <slug> --version 2
+/outline <slug>
+/outline <slug> --version 2
 ```
 
 - Takes `notes.md` + `research.md`
 - Creates hierarchical outline with citations `[^N]`
 - Suggests Mermaid/Excalidraw visuals
-- Output: `outline_vN.md` -> copy to `outline_final.md` when approved
+- Output: `outline_vN.md` → copy to `outline_final.md` when approved
 
 #### Draft
 
-```bash
-python publish.py draft <slug>
+```bashWhen we do this, we will explain 
+/draft <slug>
 ```
 
 - Loads `style-guides/blog.md` for tone/voice
 - Expands outline into full prose
 - Integrates citations, adds diagram placeholders
-- Output: `draft.md` -> edit to create `final.md`
+- Output: `draft.md` → edit to create `final.md`
 
 #### Format
 
 ```bash
-python publish.py format <slug>
+/format <slug>
 ```
 
 - Generates platform outputs:
-  - `linkedin.md` - Platform-optimized (shorter, punchier, ~3000 chars)
-  - `frontmatter.yaml` - Metadata for semops-core integration
+ - `linkedin.md` - Platform-optimized (shorter, punchier, ~3000 chars)
+ - `frontmatter.yaml` - Metadata for semops-core integration
 
-Publishing to semops-sites is handled by semops-sites's ingestion script, which reads the manifest frontmatter from `final.md` and generates MDX.
+Publishing to semops-sites is handled by semops-sites's ingestion script , which reads the manifest frontmatter from `final.md` and generates MDX.
 
 #### Status
 
 ```bash
-python publish.py status <slug>
-python publish.py status           # List all posts
+/status <slug>
+/status # List all posts
 ```
 
 Shows completion state and next steps.
@@ -108,16 +112,16 @@ Shows completion state and next steps.
 
 ```text
 posts/
-  <slug>/
-    notes.md              # Your input - topic, POV, references
-    research.md           # Agent output - findings, sources
-    outline_v1.md         # Agent output - first outline
-    outline_final.md      # Approved outline
-    draft.md              # Agent output - full draft
-    final.md              # Your edited version (with manifest frontmatter)
-    linkedin.md           # Formatted for LinkedIn
-    frontmatter.yaml      # Metadata for semops-core
-    assets/               # Diagrams, images
+ <slug>/
+ notes.md # Your input - topic, POV, references
+ research.md # Agent output - findings, sources
+ outline_v1.md # Agent output - first outline
+ outline_final.md # Approved outline
+ draft.md # Agent output - full draft
+ final.md # Your edited version (with manifest frontmatter)
+ linkedin.md # Formatted for LinkedIn
+ frontmatter.yaml # Metadata for semops-core
+ assets/ # Diagrams, images
 ```
 
 ---
@@ -138,7 +142,7 @@ Resume composition uses atomic bullets selected for target roles. The system has
 |------|---------|
 | [RESUME_CORPUS.md](resumes/corpus/RESUME_CORPUS.md) | 14 jobs with dimensional data |
 | [BULLET_CORPUS.md](resumes/corpus/BULLET_CORPUS.md) | 75 bullets with metric types |
-| [SKILL_MAPPING.md](resumes/corpus/SKILL_MAPPING.md) | 63 job->skill mappings (17 broad categories) |
+| [SKILL_MAPPING.md](resumes/corpus/SKILL_MAPPING.md) | 63 job→skill mappings (17 broad categories) |
 | [SKILLS_TAXONOMY.md](resumes/corpus/SKILLS_TAXONOMY.md) | 91 granular skills for LinkedIn/ATS/composable resume |
 | [pm-metrics-framework.md](resumes/frameworks/pm-metrics-framework.md) | Metric categories |
 | [role-targeting-analysis.md](resumes/frameworks/role-targeting-analysis.md) | Role targeting guidance |
@@ -154,24 +158,24 @@ Resume composition uses atomic bullets selected for target roles. The system has
 
 | Variant | Target Role | Job Order |
 |---------|-------------|-----------|
-| [VARIANT-A](resumes/variants/VARIANT-A-AI-ML-PM.md) | AI/ML PM | Azure -> Books -> Fire TV |
-| [VARIANT-B](resumes/variants/VARIANT-B-DATA-PM.md) | Data PM | Azure -> Fire TV -> Books |
-| [VARIANT-C](resumes/variants/VARIANT-C-MEDIA-STREAMING-PM.md) | Media/Streaming PM | Fire TV -> Roku -> Books |
+| [VARIANT-A](resumes/variants/VARIANT-A-AI-ML-PM.md) | AI/ML PM | Azure → Books → Fire TV |
+| [VARIANT-B](resumes/variants/VARIANT-B-DATA-PM.md) | Data PM | Azure → Fire TV → Books |
+| [VARIANT-C](resumes/variants/VARIANT-C-MEDIA-STREAMING-PM.md) | Media/Streaming PM | Fire TV → Roku → Books |
 
 ### Skills System
 
 The resume system uses **two complementary skill layers**:
 
-1. **Skill Mappings** (`SKILL_MAPPING.md`) -- 17 broad capability categories (e.g., `ml-ai`, `product-strategy`) mapped to jobs with proficiency levels. Used for dimensional analysis in the database (`resume_job_skill` bridge table).
+1. **Skill Mappings** (`SKILL_MAPPING.md`) — 17 broad capability categories (e.g., `ml-ai`, `product-strategy`) mapped to jobs with proficiency levels. Used for dimensional analysis in the database (`resume_job_skill` bridge table).
 
-2. **Skills Taxonomy** (`SKILLS_TAXONOMY.md`) -- 91 granular, LinkedIn-recognizable skills (e.g., "Machine Learning", "A/B Testing", "Agile / Scrum"). Used for LinkedIn profile optimization, ATS keyword matching, and composable resume generation.
+2. **Skills Taxonomy** (`SKILLS_TAXONOMY.md`) — 91 granular, LinkedIn-recognizable skills (e.g., "Machine Learning", "A/B Testing", "Agile / Scrum"). Used for LinkedIn profile optimization, ATS keyword matching, and composable resume generation.
 
 Each taxonomy skill has:
 
-- `display_name` -- matches LinkedIn's recognized skill strings for searchability and endorsements
-- `category` -- internal classification (`technical`, `domain`, `methodology`, `tool`, `soft-skill`). These are **not** LinkedIn categories; LinkedIn uses a proprietary, undocumented taxonomy. Our categories serve the composable resume filtering use case.
-- `target_roles` -- which resume variants use this skill (`ai-ml-pm`, `data-pm`, `media-pm`)
-- `linkedin` -- whether to include on the LinkedIn profile (targeting AI/ML PM, ~45 skills)
+- `display_name` — matches LinkedIn's recognized skill strings for searchability and endorsements
+- `category` — internal classification (`technical`, `domain`, `methodology`, `tool`, `soft-skill`). These are **not** LinkedIn categories; LinkedIn uses a proprietary, undocumented taxonomy. Our categories serve the composable resume filtering use case.
+- `target_roles` — which resume variants use this skill (`ai-ml-pm`, `data-pm`, `media-pm`)
+- `linkedin` — whether to include on the LinkedIn profile (targeting AI/ML PM, ~45 skills)
 
 **Filtering skills by role:**
 
@@ -181,7 +185,7 @@ Each taxonomy skill has:
 
 ### Editing Management Data
 
-Edit `RESUME_CORPUS.md` -- columns `mgmt`, `direct`, `indirect` in the Master Jobs Table:
+Edit `RESUME_CORPUS.md` — columns `mgmt`, `direct`, `indirect` in the Master Jobs Table:
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -241,7 +245,7 @@ uv run scripts/export_pdf.py *.md -o output_dir/
 
 - **Mermaid diagrams** - Auto-rendered to PNG
 - **Syntax highlighting** - Code blocks with tango theme
-- **Custom fonts** - XeLaTeX with bundled fonts
+- **Custom fonts** - XeLaTeX with fonts from semops-sites
 - **Table of contents** - Optional via `--toc`
 
 ### Requirements
@@ -249,7 +253,7 @@ uv run scripts/export_pdf.py *.md -o output_dir/
 - `pandoc` (document converter)
 - `xelatex` (TeX Live or MacTeX)
 - `mermaid-cli` (optional, for diagrams)
-- Fonts installed from semops-sites font packages
+- Fonts installed from `
 
 ---
 
@@ -263,18 +267,18 @@ Marketing-narrative pages for semops.ai. Hub/spoke structure for interconnected 
 
 - **Directory:** `content/pages/<hub-slug>/`
 - **Style:** `marketing-narrative` (founder-practitioner voice)
-- **Workflow:** Plan -> draft in `docs/drafts/` -> HITL editing -> move to `content/pages/` -> add frontmatter -> publish via semops-sites
+- **Workflow:** Plan → draft in `docs/drafts/` → HITL editing → move to `content/pages/` → add frontmatter → publish via semops-sites
 
 See [content/pages/README.md](../content/pages/README.md) for full workflow.
 
 ### Whitepapers
 
-Long-form thought leadership -> PDF via Pandoc.
+Long-form thought leadership → PDF via Pandoc.
 
 - **Directory:** `content/whitepapers/<slug>/`
 - **Style:** `whitepaper` (authoritative, evidence-backed)
-- **Length:** 3,000-4,500 words (marketing) or 4,500-7,000 words (research)
-- **Workflow:** Draft iterations in `posts/whitepaper-<slug>/` -> HITL editing -> move to `content/whitepapers/` -> add frontmatter -> export PDF
+- **Length:** 3,000–4,500 words (marketing) or 4,500–7,000 words (research)
+- **Workflow:** Draft iterations in `posts/whitepaper-<slug>/` → HITL editing → move to `content/whitepapers/` → add frontmatter → export PDF
 
 ```bash
 uv run scripts/export_pdf.py content/whitepapers/<slug>/<slug>.md -o output.pdf --template semops
@@ -284,11 +288,11 @@ See [content/whitepapers/README.md](../content/whitepapers/README.md) for full w
 
 ### GitHub READMEs
 
-Marketing-narrative READMEs for public repos. Simplest content type -- manual copy.
+Marketing-narrative READMEs for public repos. Simplest content type — manual copy.
 
 - **Directory:** `content/github/<repo-name>.md`
-- **Style:** `marketing-narrative` (500-1,500 words)
-- **Workflow:** Draft -> add frontmatter -> strip frontmatter and copy to target repo
+- **Style:** `marketing-narrative` (500–1,500 words)
+- **Workflow:** Draft → add frontmatter → strip frontmatter and copy to target repo
 
 See [content/github/README.md](../content/github/README.md) for full workflow.
 
@@ -296,7 +300,7 @@ See [content/github/README.md](../content/github/README.md) for full workflow.
 
 Two paths: blog-derived (Format Agent) or standalone originals.
 
-- **Blog-derived:** `posts/<slug>/linkedin.md` (generated by Format workflow)
+- **Blog-derived:** `posts/<slug>/linkedin.md` (generated by `/format`)
 - **Standalone:** `content/linkedin/<slug>.md`
 - **Style:** `blog` (conversational, ~3,000 chars, hashtags, CTA)
 
@@ -325,27 +329,27 @@ Capture edits with editorial intent for style guide hardening and training data.
 
 **Agent edits (real-time sidecar):**
 
-1. Enable capture for a target file
-2. Agent edits the file -- each edit is logged with reason and style metadata to `edits/.pending/<stem>.yaml`
+1. Enable capture: `/capture-on <file-path>`
+2. Agent edits the file — each edit is logged with reason and style metadata to `edits/.pending/<stem>.yaml`
 3. Review sidecar mid-session if desired
-4. Disable capture
+4. Disable capture: `/capture-off`
 
 **Cross-repo editing:**
 
-Edit capture accepts absolute paths to files in other repos. This repo is always the hub for edit capture. The file is edited in-place at its source location, while sidecar logs are written to semops-publisher's `edits/.pending/` directory.
+`/capture-on` accepts absolute paths to files in other repos (e.g., `). Run `/capture-on <path>` **from semops-publisher** — this is always the hub for edit capture. The file is edited in-place at its source location, while sidecar logs are written to semops-publisher's `edits/.pending/` directory.
 
 Two ways to make cross-repo edits:
 
 - **Agent-assisted:** Stay in semops-publisher and direct the agent to edit the file using its absolute path. Each edit is logged automatically.
-- **Manual:** Navigate to the target repo and edit the file yourself. Return to semops-publisher to finalize.
+- **Manual:** Navigate to the target repo and edit the file yourself. Return to semops-publisher for `/capture-off`.
 
-On capture completion, the changes are committed in the source repo automatically. This gives lineage in both repos -- the source repo gets the commit, semops-publisher gets the edit corpus with `source_repo` provenance.
+On `/capture-off`, the changes are committed in the source repo automatically. This gives lineage in both repos — the source repo gets the commit, semops-publisher gets the edit corpus with `source_repo` provenance.
 
 **Human edits (post-hoc diff):**
 
 1. AI generates draft with commit tag: `git commit -m "[ai-draft] Description"`
 2. Human edits the draft
-3. Run capture for the file
+3. Run capture: `/capture-edits <file-path>`
 4. Script diffs, merges any sidecar data, prompts for rationale on human edits
 5. Output: `edits/<date>-<filename>.yaml`
 
@@ -358,14 +362,14 @@ editor_type: human
 style: blog
 session_reason: null
 edits:
-  - id: edit-001
-    original: "Our focus is..."
-    edited: "My focus is..."
-    line_number: 42
-    reason: "First person consistency"
-    rule_applied: "blog.md#voice"
-    editor_type: human
-    flagged: false
+ - id: edit-001
+ original: "Our focus is..."
+ edited: "My focus is..."
+ line_number: 42
+ reason: "First person consistency"
+ rule_applied: "blog.md#voice"
+ editor_type: human
+ flagged: false
 ```
 
 ### Key Files
@@ -379,26 +383,30 @@ edits:
 
 ### Corpus Review (Style Learning Feedback Loop)
 
-Once you have a few corpus files in `edits/`, run the corpus review workflow.
+Once you have a few corpus files in `edits/`, run:
+
+```bash
+/corpus review
+```
 
 This analyzes all corpus YAML files, clusters edit reasons by theme (jargon reduction, scannability, redundancy removal, etc.), ranks by frequency and flagged count, and presents candidate rules for triage.
 
 For each cluster you can:
-- **Promote** -- Save to `style-guides/distilled-rules.yaml` AND add to a style guide
-- **Save** -- Save to `style-guides/distilled-rules.yaml` only
-- **Skip** -- Not actionable yet
+- **Promote** — Save to `style-guides/distilled-rules.yaml` AND add to a style guide
+- **Save** — Save to `style-guides/distilled-rules.yaml` only
+- **Skip** — Not actionable yet
 
-Distilled rules are automatically loaded as agent context when capture starts a new session, closing the feedback loop:
+Distilled rules are automatically loaded as agent context when `/capture-on` starts a new session, closing the feedback loop:
 
 ```
-Edits -> Corpus -> Corpus Review -> Distilled rules -> Agent context on capture start
+Edits → Corpus → /corpus review → Distilled rules → Agent context on /capture-on
 ```
 
 | File | Purpose |
 |------|---------|
-| `style-guides/distilled-rules.yaml` | Distilled rule set (output of corpus review) |
+| `style-guides/distilled-rules.yaml` | Distilled rule set (output of `/corpus review`) |
 
-See ADR-0011 for full architecture.
+See [ADR-0011](decisions/ADR-0011-edit-capture-intent-architecture.md) for full architecture.
 
 ---
 
@@ -406,11 +414,19 @@ See ADR-0011 for full architecture.
 
 ### Setup Parallel Experiments
 
-The experiment preparation workflow creates Docker-based A/B test environments in `experiments/`.
+```bash
+/prep-parallel-experiments
+```
+
+Creates Docker-based A/B test environments in `experiments/`.
 
 ### Execute and Compare
 
-The experiment execution workflow runs experiments and generates comparison report.
+```bash
+/execute-parallel-experiments
+```
+
+Runs experiments and generates comparison report.
 
 ---
 
@@ -418,15 +434,15 @@ The experiment execution workflow runs experiments and generates comparison repo
 
 Advanced workflow for structured feature development.
 
-| Capability | Purpose |
-|------------|---------|
-| Specify | Create feature spec from natural language |
-| Clarify | Ask clarification questions |
-| Plan | Generate implementation plan |
-| Tasks | Create ordered task list |
-| Tasks to Issues | Convert tasks to GitHub issues |
-| Implement | Execute the plan |
-| Analyze | Cross-artifact consistency check |
+| Command | Purpose |
+|---------|---------|
+| `/speckit.specify` | Create feature spec from natural language |
+| `/speckit.clarify` | Ask clarification questions |
+| `/speckit.plan` | Generate implementation plan |
+| `/speckit.tasks` | Create ordered task list |
+| `/speckit.taskstoissues` | Convert tasks to GitHub issues |
+| `/speckit.implement` | Execute the plan |
+| `/speckit.analyze` | Cross-artifact consistency check |
 
 ---
 
@@ -482,4 +498,5 @@ npm install -g @mermaid-js/mermaid-cli
 
 - [ARCHITECTURE.md](ARCHITECTURE.md) - System design
 - [RUNBOOK.md](RUNBOOK.md) - Operations reference
-- [decisions/](decisions/) - Architecture decisions
+- [ADR Index](decisions/) - Architecture decisions
+- [Session Notes](session-notes/) - Work history by issue

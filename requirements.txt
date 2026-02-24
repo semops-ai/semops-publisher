@@ -1,0 +1,24 @@
+# Phase 1: Minimal dependencies for manual-first workflow
+
+# AI/LLM
+anthropic>=0.39.0
+
+# Data models and settings
+pydantic>=2.10.0
+python-frontmatter>=1.1.0
+
+# CLI
+click>=8.1.0
+rich>=13.9.0
+
+# Utilities
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+
+# Development
+pytest>=8.3.0
+ruff>=0.8.0
+
+# Optional: for future web research
+requests>=2.32.0
+beautifulsoup4>=4.12.0

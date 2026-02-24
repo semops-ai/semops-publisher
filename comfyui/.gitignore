@@ -1,0 +1,17 @@
+# Large model files - download via download-models.sh
+models/**/*.safetensors
+models/**/*.ckpt
+models/**/*.pt
+models/**/*.bin
+
+# Keep directory structure
+!models/**/.gitkeep
+
+# Outputs (copy what you need to posts/<slug>/assets/)
+outputs/*.png
+outputs/*.jpg
+outputs/*.webp
+
+# Temp files
+*.tmp
+*.log

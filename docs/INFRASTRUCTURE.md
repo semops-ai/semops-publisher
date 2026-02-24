@@ -8,24 +8,26 @@
 
 ## Overview
 
-semops-publisher has minimal infrastructure - primarily local ComfyUI for image generation. Most infrastructure needs (database, vector DB) are consumed from semops-core.
+Publisher-pr has minimal infrastructure - primarily local ComfyUI for image generation. Most infrastructure needs (database, vector DB) are consumed from semops-core.
 
 ## Services
 
-| Service | Purpose | Status |
-|---------|---------|--------|
-| ComfyUI | Image generation (SDXL, LoRAs) | On-demand |
+| Service | Port | Purpose | Status |
+|---------|------|---------|--------|
+| ComfyUI | 8188 | Image generation (SDXL, LoRAs) | On-demand |
 
 ## ComfyUI
 
 Local GPU-based image generation using ComfyUI.
+
+**Container:** `ike-comfyui`
 
 **Location:** `comfyui/docker-compose.yml`
 
 ### Starting
 
 ```bash
-cd comfyui
+cd 
 docker compose up -d
 ```
 
@@ -39,7 +41,7 @@ docker compose down
 
 | Path | Purpose |
 |------|---------|
-| `models/` | Centralized model storage (checkpoints, LoRAs, VAE) |
+| `~/models/` | Centralized model storage (checkpoints, LoRAs, VAE) |
 | `./workflows/` | ComfyUI workflow JSON files |
 | `./inputs/` | Input images (ControlNet, img2img) |
 | `./outputs/` | Generated output images |
@@ -47,18 +49,18 @@ docker compose down
 
 ### Model Storage
 
-Models are stored centrally per ADR-0006. ComfyUI expects:
+Models are stored centrally at `~/models/` per ADR-0006. ComfyUI expects:
 
 ```text
-models/
-├── checkpoints/      # Base models (SDXL, SD 1.5)
-├── loras/            # LoRA models
-├── controlnet/       # ControlNet models
-├── vae/              # VAE models
-├── clip/             # CLIP models
-├── clip_vision/      # CLIP vision models
-├── ipadapter/        # IP-Adapter models
-└── upscale_models/   # Upscalers
+~/models/
+├── checkpoints/ # Base models (SDXL, SD 1.5)
+├── loras/ # LoRA models
+├── controlnet/ # ControlNet models
+├── vae/ # VAE models
+├── clip/ # CLIP models
+├── clip_vision/ # CLIP vision models
+├── ipadapter/ # IP-Adapter models
+└── upscale_models/ # Upscalers
 ```
 
 ### GPU Requirements
@@ -69,19 +71,19 @@ models/
 
 ## Consumed Services
 
-semops-publisher consumes infrastructure from other repos:
+Publisher-pr consumes infrastructure from other repos:
 
-| Service | Source Repo | Purpose |
-|---------|-------------|---------|
-| PostgreSQL | semops-core | Knowledge base entities |
-| Qdrant | semops-core | Vector similarity search |
-| MCP Server | semops-core | Agent KB access |
+| Service | Source Repo | Port | Purpose |
+|---------|-------------|------|---------|
+| PostgreSQL | semops-core | 5432 | Knowledge base entities |
+| Qdrant | semops-core | 6333 | Vector similarity search |
+| MCP Server | semops-core | — | Agent KB access |
 
 ## Environment Variables
 
 ```bash
 # .env
-ANTHROPIC_API_KEY=sk-ant-...     # Claude API for agents
+ANTHROPIC_API_KEY=sk-ant-... # Claude API for agents
 CLAUDE_MODEL=claude-sonnet-4-20250514
 
 # Supabase (consumed from semops-core)
@@ -96,10 +98,10 @@ HF_TOKEN=...
 
 ```bash
 # ComfyUI
-curl -s <comfyui-service>/system_stats
+curl -s http://localhost:8188/system_stats
 
 # Check GPU is visible
-nvidia-smi
+docker exec ike-comfyui nvidia-smi
 ```
 
 ## Cloud GPU (RunPod)
@@ -115,5 +117,6 @@ For heavy compute jobs, semops-publisher can offload to RunPod:
 ## Related Documentation
 
 - [ARCHITECTURE.md](ARCHITECTURE.md) - This repo's architecture
-- ADR-0004: ComfyUI for Image Generation
-- ADR-0006: Model Storage Architecture
+- [ADR-0004: ComfyUI for Image Generation](decisions/ADR-0004-COMFYUI-IMAGE-GENERATION.md)
+- [ADR-0006: Model Storage Architecture](decisions/ADR-0006-model-storage-architecture.md)
+- [GLOBAL_ARCHITECTURE.md](https://github.com/semops-ai/semops-dx-orchestrator/blob/main/docs/GLOBAL_ARCHITECTURE.md) - System landscape

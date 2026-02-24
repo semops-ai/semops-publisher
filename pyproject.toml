@@ -5,28 +5,28 @@ description = "Blog publishing workflow with AI agents"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    # AI/LLM
-    "anthropic>=0.39.0",
-    # Data models and settings
-    "pydantic>=2.10.0",
-    "python-frontmatter>=1.1.0",
-    # CLI
-    "click>=8.1.0",
-    "rich>=13.9.0",
-    # Utilities
-    "python-dotenv>=1.0.0",
-    "pyyaml>=6.0.0",
-    # Web research
-    "requests>=2.32.0",
-    "beautifulsoup4>=4.12.0",
-    # PDF export
-    "pypandoc>=1.14",
+ # AI/LLM
+ "anthropic>=0.39.0",
+ # Data models and settings
+ "pydantic>=2.10.0",
+ "python-frontmatter>=1.1.0",
+ # CLI
+ "click>=8.1.0",
+ "rich>=13.9.0",
+ # Utilities
+ "python-dotenv>=1.0.0",
+ "pyyaml>=6.0.0",
+ # Web research
+ "requests>=2.32.0",
+ "beautifulsoup4>=4.12.0",
+ # PDF export
+ "pypandoc>=1.14",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=8.3.0",
-    "ruff>=0.8.0",
+ "pytest>=8.3.0",
+ "ruff>=0.8.0",
 ]
 
 [project.scripts]
